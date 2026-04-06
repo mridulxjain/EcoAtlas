@@ -1,9 +1,24 @@
+import beardedVultureImg from '../assets/bearded-vulture.png'
+import bharalImg from '../assets/bharal.png'
 import blackNeckedCraneImg from '../assets/black-necked-crane.jpeg'
+import chirPineImg from '../assets/chir-pine.png'
+import deodarCedarImg from '../assets/deodar-cedar.png'
+import himalayanBirchImg from '../assets/himalayan-birch.png'
+import himalayanBluePoppyImg from '../assets/himalayan-blue-poppy.png'
+import himalayanBrownBearImg from '../assets/himalayan-brown-bear.png'
+import himalayanGriffonImg from '../assets/himalayan-griffon.png'
+import himalayanJuniperImg from '../assets/himalayan-juniper.png'
 import himalayanMonalImg from '../assets/himalayan-monal.jpg'
-import himalayanMuskDeerImg from '../assets/himalayan-muskdeer.jpg'
+import himalayanMuskDeerImg from '../assets/himalayan-musk-deer.jpg'
+import himalayanSerowImg from '../assets/himalayn-serow.png'
+import himalayanTahrImg from '../assets/himalayan-tahr.png'
 import himalayanYewImg from '../assets/himalayan-yew.png'
 import redPandaImg from '../assets/redpanda.png'
+import siberianIbexImg from '../assets/siberian-ibex(himalayan-population).png'
 import snowLeopardImg from '../assets/snowleopard.png'
+import tibetanWolfImg from '../assets/tibetan-wolf.png'
+import westHimalayanFirImg from '../assets/west-himalayan-fir.png'
+import westernTragopanImg from '../assets/western-tragopan.png'
 
 export const REGIONS = [
   {
@@ -149,8 +164,7 @@ export const SPECIES = [
     trend: [7800, 7720, 7680, 7510, 7392, 7288],
     habitat: 'Moist alpine meadows and scree slopes',
     threats: 'Temperature extremes and trampling in tourist zones',
-    image:
-      'https://images.unsplash.com/photo-1463320726281-696a485928c7?auto=format&fit=crop&w=900&q=80',
+    image: himalayanBluePoppyImg,
   },
   {
     id: 'deodar-cedar',
@@ -164,8 +178,7 @@ export const SPECIES = [
     trend: [8600, 8540, 8475, 8390, 8284, 8198],
     habitat: 'Mid-elevation conifer forests on western Himalayan slopes',
     threats: 'Forest fires, construction pressure, and fungal disease spread',
-    image:
-      'https://images.unsplash.com/photo-1482192597420-4816b9c5b2f0?auto=format&fit=crop&w=900&q=80',
+    image: deodarCedarImg,
   },
   {
     id: 'himalayan-birch',
@@ -179,8 +192,7 @@ export const SPECIES = [
     trend: [6400, 6265, 6122, 5980, 5841, 5699],
     habitat: 'Treeline belts and subalpine valleys',
     threats: 'Fuelwood extraction and shifting treeline from warming',
-    image:
-      'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80',
+    image: himalayanBirchImg,
   },
   {
     id: 'himalayan-juniper',
@@ -194,8 +206,7 @@ export const SPECIES = [
     trend: [5200, 5128, 5044, 4962, 4868, 4789],
     habitat: 'Dry alpine slopes and glacial moraines',
     threats: 'Slow regeneration and grazing pressure',
-    image:
-      'https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1?auto=format&fit=crop&w=900&q=80',
+    image: himalayanJuniperImg,
   },
   {
     id: 'himalayan-tahr',
@@ -209,8 +220,7 @@ export const SPECIES = [
     trend: [5200, 5140, 5072, 5018, 4951, 4880],
     habitat: 'Steep alpine cliffs and grassy ridgelines',
     threats: 'Competition with livestock and fragmented migration routes',
-    image:
-      'https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=900&q=80',
+    image: himalayanTahrImg,
   },
   {
     id: 'bharal-blue-sheep',
@@ -224,8 +234,7 @@ export const SPECIES = [
     trend: [9100, 9050, 8998, 8924, 8871, 8788],
     habitat: 'Open high-altitude plateaus and rocky slopes',
     threats: 'Overgrazing and increasing pastoral pressure',
-    image:
-      'https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=900&q=80',
+    image: bharalImg,
   },
   {
     id: 'himalayan-brown-bear',
@@ -239,8 +248,7 @@ export const SPECIES = [
     trend: [430, 424, 418, 407, 396, 382],
     habitat: 'Subalpine scrub, meadows, and glacial valleys',
     threats: 'Human-wildlife conflict and shrinking food corridors',
-    image:
-      'https://images.unsplash.com/photo-1589656966895-2f33e7653819?auto=format&fit=crop&w=900&q=80',
+    image: himalayanBrownBearImg,
   },
   {
     id: 'western-tragopan',
@@ -254,8 +262,7 @@ export const SPECIES = [
     trend: [2300, 2248, 2180, 2117, 2060, 1996],
     habitat: 'Dense conifer forests with undergrowth at mid altitudes',
     threats: 'Habitat fragmentation and poaching in breeding zones',
-    image:
-      'https://images.unsplash.com/photo-1591198936750-16d8e15edb9e?auto=format&fit=crop&w=900&q=80',
+    image: westernTragopanImg,
   },
   {
     id: 'bearded-vulture',
@@ -269,8 +276,7 @@ export const SPECIES = [
     trend: [1680, 1662, 1640, 1621, 1598, 1576],
     habitat: 'Cliff faces and high mountain thermals',
     threats: 'Poisoned carcasses and nest disturbance',
-    image:
-      'https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=900&q=80',
+    image: beardedVultureImg,
   },
   {
     id: 'himalayan-griffon',
@@ -284,8 +290,7 @@ export const SPECIES = [
     trend: [5400, 5324, 5242, 5171, 5095, 5018],
     habitat: 'High-altitude soaring zones and open valleys',
     threats: 'Veterinary drug contamination and food scarcity',
-    image:
-      'https://images.unsplash.com/photo-1574144113084-b6f450cc5e0c?auto=format&fit=crop&w=900&q=80',
+    image: himalayanGriffonImg,
   },
   {
     id: 'himalayan-serow',
@@ -299,8 +304,7 @@ export const SPECIES = [
     trend: [3800, 3742, 3690, 3621, 3554, 3492],
     habitat: 'Steep forested ravines and montane scrub',
     threats: 'Hunting pressure and forest edge encroachment',
-    image:
-      'https://images.unsplash.com/photo-1501706362039-c6e80948b6f4?auto=format&fit=crop&w=900&q=80',
+    image: himalayanSerowImg,
   },
   {
     id: 'himalayan-ibex',
@@ -314,8 +318,21 @@ export const SPECIES = [
     trend: [7600, 7531, 7478, 7399, 7336, 7262],
     habitat: 'Dry alpine mountains and glaciated slopes',
     threats: 'Competition with domestic herds and winter stress',
-    image:
-      'https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=900&q=80',
+    image: siberianIbexImg,
+  },
+  {
+    id: 'tibetan-wolf',
+    name: 'Tibetan Wolf',
+    scientificName: 'Canis lupus chanco',
+    type: 'Animal',
+    group: 'Mammal',
+    region: 'Ladakh',
+    status: 'Near Threatened',
+    risk: 'High',
+    trend: [980, 956, 932, 906, 881, 854],
+    habitat: 'Cold arid plateaus and open alpine grasslands',
+    threats: 'Retaliatory killing, prey decline, and habitat fragmentation',
+    image: tibetanWolfImg,
   },
   {
     id: 'himalayan-cedar-pine',
@@ -329,8 +346,7 @@ export const SPECIES = [
     trend: [12400, 12282, 12158, 12031, 11894, 11760],
     habitat: 'Lower montane dry slopes and foothill forests',
     threats: 'Frequent fires and monoculture expansion pressure',
-    image:
-      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
+    image: chirPineImg,
   },
   {
     id: 'silver-fir',
@@ -344,8 +360,7 @@ export const SPECIES = [
     trend: [8800, 8745, 8692, 8626, 8559, 8490],
     habitat: 'Cool temperate moist forests',
     threats: 'Fungal outbreaks and changing snowfall patterns',
-    image:
-      'https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80',
+    image: westHimalayanFirImg,
   },
   {
     id: 'himalayan-rhododendron-tree',

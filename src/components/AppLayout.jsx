@@ -5,6 +5,7 @@ const NAV_ITEMS = [
   { to: '/', label: 'Home' },
   { to: '/map', label: 'Map' },
   { to: '/explore', label: 'Explore' },
+  { to: '/conserve', label: 'Conserve' },
   { to: '/food-chain', label: 'Food Chain' },
   { to: '/tracker', label: 'Tracker' },
   { to: '/simulation', label: 'Simulation' },
