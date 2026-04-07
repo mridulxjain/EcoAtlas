@@ -1010,7 +1010,7 @@ select {
 
 .tracker-brief {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: repeat(4, minmax(0, 1fr));
 	gap: 0.6rem;
 	padding: 0.8rem;
 	margin-bottom: 0.9rem;
@@ -1090,6 +1090,35 @@ select {
 
 .tracker-alerts li strong {
 	color: #c95f5f;
+}
+
+.tracker-live-strip {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 0.5rem;
+	padding: 0.75rem;
+	margin-bottom: 0.9rem;
+}
+
+.tracker-live-strip div {
+	padding: 0.5rem;
+	border-radius: 10px;
+	background: rgba(235, 247, 255, 0.85);
+	border: 1px solid rgba(129, 169, 207, 0.32);
+	display: grid;
+	gap: 0.16rem;
+}
+
+.tracker-live-strip small {
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: #5a7f9f;
+}
+
+.tracker-live-strip strong {
+	font-size: 1rem;
+	color: #24557f;
 }
 
 .live-dot {
@@ -1197,6 +1226,14 @@ select {
 	align-items: center;
 	gap: 0.8rem;
 	margin-bottom: 0.7rem;
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	padding: 0.72rem 0.72rem 0.55rem;
+	background: linear-gradient(180deg, rgba(243, 250, 255, 0.98), rgba(243, 250, 255, 0.92));
+	backdrop-filter: blur(6px);
+	border-top-left-radius: 14px;
+	border-top-right-radius: 14px;
 }
 
 .report-modal-head h3 {
@@ -1257,6 +1294,13 @@ select {
 	justify-content: flex-end;
 	gap: 0.6rem;
 	margin-top: 0.2rem;
+	position: sticky;
+	bottom: 0;
+	z-index: 2;
+	padding: 0.6rem 0.72rem 0.32rem;
+	background: linear-gradient(0deg, rgba(243, 250, 255, 0.98), rgba(243, 250, 255, 0.88));
+	border-bottom-left-radius: 14px;
+	border-bottom-right-radius: 14px;
 }
 
 .report-submit-btn {
@@ -2233,6 +2277,10 @@ input[type='range'] {
 		grid-template-columns: 1fr;
 	}
 
+	.tracker-live-strip {
+		grid-template-columns: 1fr;
+	}
+
 	.tracker-controls {
 		grid-template-columns: 1fr;
 	}
@@ -2254,6 +2302,21 @@ input[type='range'] {
 
 	.report-actions {
 		justify-content: flex-start;
+	}
+
+	.report-modal {
+		width: min(680px, 98vw);
+		max-height: 92vh;
+		padding: 0.8rem;
+	}
+
+	.report-modal-head {
+		top: 0;
+		padding-top: 0.72rem;
+	}
+
+	.report-actions {
+		bottom: 0;
 	}
 
 	.map-route-layout {
@@ -2363,5 +2426,24 @@ input[type='range'] {
 
 	html {
 		scroll-behavior: auto;
+	}
+}
+
+@media (max-width: 560px) {
+	.report-modal-backdrop {
+		padding: 0.35rem;
+	}
+
+	.report-modal {
+		width: 100%;
+		max-height: 96vh;
+		border-radius: 12px;
+	}
+
+	.report-sighting-btn {
+		left: 0.7rem;
+		right: 0.7rem;
+		bottom: 0.7rem;
+		text-align: center;
 	}
 }

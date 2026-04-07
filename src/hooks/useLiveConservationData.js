@@ -7,6 +7,14 @@ const WORLD_BANK_INDICATORS = {
   threatenedPlants: 'EN.PLT.THRD.NO',
 }
 
+// Temporary fixed snapshot values until weather API reliability is restored.
+const HARD_CODED_CLIMATE_BY_REGION = {
+  Ladakh: { temperature: -1.8, precipitation: 0.1, snowfall: 1.2 },
+  Himachal: { temperature: 11.4, precipitation: 0.6, snowfall: 0.0 },
+  Uttarakhand: { temperature: 13.2, precipitation: 0.8, snowfall: 0.0 },
+  Sikkim: { temperature: 9.7, precipitation: 1.1, snowfall: 0.0 },
+}
+
 function latestNonNullValue(rows) {
   return rows?.find((row) => row?.value !== null) ?? null
 }
@@ -47,23 +55,20 @@ export default function useLiveConservationData(regions, species) {
 
         const indicators = Object.fromEntries(indicatorEntries)
 
-        const climate = await Promise.all(
-          regions.map(async (region) => {
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${region.lat}&longitude=${region.lng}&current=temperature_2m,precipitation,snowfall&timezone=auto`
-            const response = await fetch(url, { signal: controller.signal })
-            if (!response.ok) {
-              throw new Error(`Open-Meteo request failed for ${region.name}`)
-            }
+        const climate = regions.map((region) => {
+          const fixed = HARD_CODED_CLIMATE_BY_REGION[region.name] ?? {
+            temperature: null,
+            precipitation: 0,
+            snowfall: 0,
+          }
 
-            const payload = await response.json()
-            return {
-              region: region.name,
-              temperature: payload?.current?.temperature_2m ?? null,
-              precipitation: payload?.current?.precipitation ?? 0,
-              snowfall: payload?.current?.snowfall ?? 0,
-            }
-          }),
-        )
+          return {
+            region: region.name,
+            temperature: fixed.temperature,
+            precipitation: fixed.precipitation,
+            snowfall: fixed.snowfall,
+          }
+        })
 
         const gbif = await Promise.all(
           trackedNames.map(async (scientificName) => {

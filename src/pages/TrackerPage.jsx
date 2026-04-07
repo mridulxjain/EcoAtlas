@@ -39,14 +39,6 @@ function TrackerPage({ species, trackerMetrics, liveData, loading, error }) {
     })
   }, [species, searchText, filterRegion, filterType, filterRisk])
 
-  const gbifLookup = useMemo(() => {
-    const table = new Map()
-    liveData.gbif.forEach((item) => {
-      table.set(item.scientificName, item.occurrenceCount)
-    })
-    return table
-  }, [liveData])
-
   const trackerInsights = useMemo(() => {
     if (!filteredSpecies.length) {
       return {
@@ -77,6 +69,35 @@ function TrackerPage({ species, trackerMetrics, liveData, loading, error }) {
       topDecliners,
     }
   }, [filteredSpecies])
+
+  const climateSnapshot = useMemo(() => {
+    const rows = liveData?.climate ?? []
+    if (!rows.length) {
+      return {
+        avgTemp: null,
+        avgPrecip: null,
+        avgSnowfall: null,
+        warmestRegion: null,
+      }
+    }
+
+    const validTemps = rows.filter((row) => typeof row.temperature === 'number')
+    const avgTemp = validTemps.length
+      ? validTemps.reduce((sum, row) => sum + row.temperature, 0) / validTemps.length
+      : null
+    const avgPrecip = rows.reduce((sum, row) => sum + (row.precipitation ?? 0), 0) / rows.length
+    const avgSnowfall = rows.reduce((sum, row) => sum + (row.snowfall ?? 0), 0) / rows.length
+    const warmestRegion = validTemps.length
+      ? validTemps.reduce((max, row) => (row.temperature > max.temperature ? row : max))
+      : null
+
+    return {
+      avgTemp,
+      avgPrecip,
+      avgSnowfall,
+      warmestRegion,
+    }
+  }, [liveData])
 
   function updateReportField(field, value) {
     setReportForm((prev) => ({ ...prev, [field]: value }))
@@ -155,20 +176,50 @@ function TrackerPage({ species, trackerMetrics, liveData, loading, error }) {
 
       <div className="tracker-brief glass">
         <article>
-          <small>Mean Retention Across Tracked Species</small>
+          <small>Filtered Species</small>
+          <strong>{filteredSpecies.length}</strong>
+          <p>Current profiles after search and filters.</p>
+        </article>
+        <article>
+          <small>Mean Retention</small>
           <strong>{trackerInsights.avgRetention}%</strong>
-          <p>% = current population versus baseline period in this tracker.</p>
+          <p>Current population versus baseline period.</p>
         </article>
         <article>
-          <small>High-Risk Profiles (Critical + High)</small>
+          <small>High-Risk Profiles</small>
           <strong>{trackerInsights.criticalOrHigh}</strong>
-          <p>Count of species tagged as high exposure in the current dataset.</p>
+          <p>Species tagged as Critical or High risk.</p>
         </article>
         <article>
-          <small>Population Change Threshold</small>
-          <strong>Below 90%</strong>
-          <p>Any value below 90% indicates notable decline from baseline.</p>
+          <small>Declining Profiles</small>
+          <strong>{trackerMetrics.decliningCount}</strong>
+          <p>Total profiles currently showing decline.</p>
         </article>
+      </div>
+
+      <div className="tracker-live-strip glass">
+        <div>
+          <small>Avg Temperature</small>
+          <strong>{loading ? '...' : climateSnapshot.avgTemp !== null ? `${climateSnapshot.avgTemp.toFixed(1)}°C` : 'N/A'}</strong>
+        </div>
+        <div>
+          <small>Avg Precipitation</small>
+          <strong>{loading ? '...' : climateSnapshot.avgPrecip !== null ? `${climateSnapshot.avgPrecip.toFixed(1)} mm` : 'N/A'}</strong>
+        </div>
+        <div>
+          <small>Avg Snowfall</small>
+          <strong>{loading ? '...' : climateSnapshot.avgSnowfall !== null ? `${climateSnapshot.avgSnowfall.toFixed(1)} mm` : 'N/A'}</strong>
+        </div>
+        <div>
+          <small>Warmest Region Now</small>
+          <strong>
+            {loading
+              ? '...'
+              : climateSnapshot.warmestRegion
+                ? `${climateSnapshot.warmestRegion.region} (${climateSnapshot.warmestRegion.temperature.toFixed(1)}°C)`
+                : 'N/A'}
+          </strong>
+        </div>
       </div>
 
       <div className="tracker-alerts glass">
@@ -181,63 +232,6 @@ function TrackerPage({ species, trackerMetrics, liveData, loading, error }) {
             </li>
           ))}
         </ul>
-      </div>
-
-      <div className="tracker-metrics">
-        <article className="metric glass">
-          <h3>{trackerMetrics.animalCount}</h3>
-          <p>Animal species tracked</p>
-        </article>
-        <article className="metric glass">
-          <h3>{trackerMetrics.treeCount}</h3>
-          <p>Tree species tracked</p>
-        </article>
-        <article className="metric glass">
-          <h3>{trackerMetrics.decliningCount}</h3>
-          <p>Total declining profiles</p>
-        </article>
-      </div>
-
-      <div className="tracker-metrics">
-        <article className="metric glass">
-          <h3>{trackerMetrics.animalDecline}</h3>
-          <p>Declining animals</p>
-        </article>
-        <article className="metric glass">
-          <h3>{trackerMetrics.treeDecline}</h3>
-          <p>Declining trees</p>
-        </article>
-        <article className="metric glass">
-          <h3>{loading ? '...' : liveData.indicators?.threatenedPlants?.value ?? 'N/A'}</h3>
-          <p>Threatened plant species in India</p>
-        </article>
-      </div>
-
-      <div className="api-grid">
-        <article className="glass api-card">
-          <h4>World Bank Indicators</h4>
-          {loading ? (
-            <p>Loading live indicators...</p>
-          ) : (
-            <ul>
-              <li>Forest area: {liveData.indicators?.forestAreaPct?.value?.toFixed(2) ?? 'N/A'}%</li>
-              <li>Threatened mammals: {liveData.indicators?.threatenedMammals?.value ?? 'N/A'}</li>
-              <li>Threatened birds: {liveData.indicators?.threatenedBirds?.value ?? 'N/A'}</li>
-              <li>Threatened plants: {liveData.indicators?.threatenedPlants?.value ?? 'N/A'}</li>
-            </ul>
-          )}
-        </article>
-
-        <article className="glass api-card">
-          <h4>GBIF Occurrence Snapshot (India)</h4>
-          <ul>
-            {species.slice(0, 6).map((item) => (
-              <li key={item.id}>
-                {item.name}: {loading ? '...' : gbifLookup.get(item.scientificName) ?? 'N/A'}
-              </li>
-            ))}
-          </ul>
-        </article>
       </div>
 
       {error ? <p className="error-text">{error}</p> : null}
@@ -386,6 +380,8 @@ function TrackerPage({ species, trackerMetrics, liveData, loading, error }) {
                   onChange={(event) => updateReportField('notes', event.target.value)}
                   rows={3}
                   placeholder="Behavior, habitat, weather, or potential threats"
+                  minLength={12}
+                  required
                 />
               </label>
 
@@ -395,7 +391,9 @@ function TrackerPage({ species, trackerMetrics, liveData, loading, error }) {
                   type="text"
                   value={reportForm.reporterName}
                   onChange={(event) => updateReportField('reporterName', event.target.value)}
-                  placeholder="Optional"
+                  placeholder="Full name"
+                  minLength={2}
+                  required
                 />
               </label>
 
@@ -405,7 +403,8 @@ function TrackerPage({ species, trackerMetrics, liveData, loading, error }) {
                   type="text"
                   value={reportForm.contact}
                   onChange={(event) => updateReportField('contact', event.target.value)}
-                  placeholder="Optional"
+                  placeholder="Email or phone"
+                  required
                 />
               </label>
 
